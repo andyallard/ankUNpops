@@ -1,0 +1,6 @@
+# Ignore all files/folders...
+/**/*
+
+# ...except these ones
+!/un_api.py
+!/.gitignore
