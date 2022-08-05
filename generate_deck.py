@@ -21,6 +21,8 @@ class MyNote(genanki.Note):
 
 
 def sigfig(x: float, sig: int) -> float:
+    if str(x)[0] == '1' and x > 10 ** 8:
+        sig += 1
     return round(x, sig - int(floor(log10(abs(x)))) - 1)
 
 
