@@ -133,7 +133,7 @@ def converter(object):
     return object.__str__()
 
 
-def country_populations_current_year():
+def country_populations_current_year() -> pd.DataFrame:
     # These options change the visual display of pandas.DataFrame objects
     # Useful for adapting/debugging
     # pd.set_option('display.max_columns', None)
@@ -170,10 +170,12 @@ def country_populations_current_year():
                                 ]
 
     population.reset_index(drop=True, inplace=True)
-    print_heading('Countries')
-    print(population)
+
     write_to_file_json(population.to_json())
+    return population
 
 
 if __name__ == '__main__':
-    country_populations_current_year()
+    population = country_populations_current_year()
+    print_heading('Countries')
+    print(population)

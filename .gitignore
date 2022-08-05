@@ -3,4 +3,5 @@
 
 # ...except these ones
 !/un_api.py
+!/generate_deck.py
 !/.gitignore
