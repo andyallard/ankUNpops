@@ -142,7 +142,7 @@ def country_populations_current_year() -> pd.DataFrame:
     # THE FOLLOWING LINES ARE USEFUL FOR ADAPTING THIS PROGRAM TO EXTRACT
     # OTHER TYPES OF DATA
     # topics = callAPI_and_print('/topics/')
-    # df_locations = callAPI_and_print('/locations/')
+    df_locations = callAPI_and_print('/locations/')
     # pop_indicators = callAPI_and_print('/topics/Pop/indicators/')
     df_locations = callAPI('/locations/')
 
@@ -166,7 +166,8 @@ def country_populations_current_year() -> pd.DataFrame:
     # filters the returned results
     population = population.loc[(population['variant'] == "Median") &
                                 (population['sex'] == "Both sexes"),
-                                ['location', "indicator", "variant", "value"]
+                                ['locationId', 'location', "indicator",
+                                "variant", "value", ]
                                 ]
 
     population.reset_index(drop=True, inplace=True)

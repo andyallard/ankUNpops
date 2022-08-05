@@ -1,5 +1,4 @@
 import json
-import random
 import genanki
 import datetime
 import un_api
@@ -49,14 +48,13 @@ def read_from_file(name):
 
 def generate_note_model():
     return genanki.Model(
-        # id of model must be unique, so here is a randomly generated 10 digit
-        # integer
-        random.randint(10 ** 9, 10 ** 10),
+        1058090155,
         'Country Populations (UN)',
         fields=[
             {'name': 'Country'},
             {'name': 'Population'},
             {'name': 'Year'},
+            {'name': 'ISO Country Code'}
         ],
         templates=[
             {
@@ -81,13 +79,16 @@ def print_welcome_message():
     s = ' ' * 4
     p = '#'
     date = check_last_modified('countries')
-    print('\n' + p * 100)
-    print(s, 'Welcome to the Anki Country Population (ankUNpops) deck')
+    print('\n' + p * 95)
+    print(s, 'Welcome to the Anki Country Population (ankUNpops) deck'
+          ' generator')
     print(s, 'The last time data was pulled from the UN Population Division'
           f' database was {date}.')
     print(s, 'The UN releases their report "World Population Prospects"'
           ' generally every 2 years.')
-    print(p * 100)
+    print(p * 95)
+    print('\nBefore your Anki deck is created, you must choose the data'
+          ' source.')
 
 
 def get_data() -> pd.DataFrame:
@@ -95,7 +96,8 @@ def get_data() -> pd.DataFrame:
     while choice not in ('1', '2'):
         print('Would you like to :\n'
               '    1. Generate Anki deck with existing data (stored locally)\n'
-              '    2. Update the data from the UN Population Division database'
+              '    2. Use data directly from the UN Population Division'
+              ' database (this will also update the local copy)'
               )
         choice = input('Type 1 or 2: ').strip()
 
@@ -112,12 +114,9 @@ if __name__ == '__main__':
     data = get_data()
 
     print(data)
-    # the current date will be used as the unique id for the deck
-    current_date = datetime.datetime.now().date()
-    current_date = int(str(current_date).replace('-', ''))
 
     anki_deck = genanki.Deck(
-        current_date,
+        20220804,
         'Country Populations (UN)')
 
     for idx, row in data.iterrows():
@@ -126,10 +125,11 @@ if __name__ == '__main__':
         # convert to string with spaces separating each '000'
         pop = str("{:,}".format(pop)).replace(",", " ")
         country = row['location']
+        iso = str(row['locationId'])
         # print(country, pop)
         n = MyNote(
             model=my_model,
-            fields=[country, pop, str(un_api.current_year())]
+            fields=[country, pop, str(un_api.current_year()), iso]
         )
         # This line is useful for debugging
         # print(idx, n.fields, n.guid)
