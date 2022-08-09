@@ -1,7 +1,7 @@
 # ankUNpops
 ## Anki Country Populations (UN)
 
-This is the code used to generate the Anki Country Populations (UN) shared deck.
+This is the code used to generate the [Anki Country Populations (UN) shared deck](https://ankiweb.net/shared/info/1403956604).
 
 How it works:
 
