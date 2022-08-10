@@ -137,7 +137,7 @@ def country_populations_current_year() -> pd.DataFrame:
     # These options change the visual display of pandas.DataFrame objects
     # Useful for adapting/debugging
     # pd.set_option('display.max_columns', None)
-    # pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_rows', None)
 
     # THE FOLLOWING LINES ARE USEFUL FOR ADAPTING THIS PROGRAM TO EXTRACT
     # OTHER TYPES OF DATA
@@ -157,7 +157,7 @@ def country_populations_current_year() -> pd.DataFrame:
     # Converts country code list into a string to be used in  API call
     country_selection_string = ",".join(country_codes)
     relative_path = create_relative_path(49, country_selection_string)
-    population = callAPI(relative_path)
+    # population = callAPI(relative_path)
 
     # This is an alternative call with only 9 countries, useful for testing
     # relative_path = create_relative_path(49, '4,8,12,20,24,28,31,32,36')

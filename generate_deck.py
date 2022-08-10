@@ -21,7 +21,7 @@ class MyNote(genanki.Note):
 
 
 def sigfig(x: float, sig: int) -> float:
-    if str(x)[0] == '1' and x > 10 ** 8:
+    if x > 10 ** 8:
         sig += 1
     return round(x, sig - int(floor(log10(abs(x)))) - 1)
 
@@ -56,7 +56,8 @@ def generate_note_model():
             {'name': 'Country'},
             {'name': 'Population'},
             {'name': 'Year'},
-            {'name': 'ISO Country Code'}
+            {'name': 'ISO Country Code'},
+            {'name': 'Population Sort Field'}
         ],
         templates=[
             {
@@ -73,7 +74,8 @@ def generate_note_model():
                         ".small { font-size: 0.5em; }\n"
                         ".blue { color: #7A8FE1; }\n"
                         ".green { color: #32936F; }\n"
-                        ".red { color: #A15E49; }")
+                        ".red { color: #A15E49; }"),
+        sort_field_index=4
         )
 
 
@@ -125,13 +127,14 @@ if __name__ == '__main__':
         # convert to 2 significant figures
         pop = sigfig(row['value'], 2)
         # convert to string with spaces separating each '000'
-        pop = str("{:,}".format(pop)).replace(",", " ")
+        pop_readable = str("{:,}".format(pop)).replace(",", " ")
         country = row['location']
         iso = str(row['locationId'])
         # print(country, pop)
         n = MyNote(
             model=my_model,
-            fields=[country, pop, str(un_api.current_year()), iso]
+            fields=[country, pop_readable, str(un_api.current_year()), iso,
+                    str(pop)]
         )
         # This line is useful for debugging
         # print(idx, n.fields, n.guid)
